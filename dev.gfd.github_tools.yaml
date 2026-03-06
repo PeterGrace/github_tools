@@ -4,7 +4,7 @@ runtime-version: '24.08'
 sdk: org.freedesktop.Sdk
 sdk-extensions:
   - org.freedesktop.Sdk.Extension.rust-stable
-command: github_tools
+command: github-tools
 
 finish-args:
   - --share=network
@@ -21,7 +21,7 @@ modules:
     build-commands:
       - cargo --offline fetch --manifest-path Cargo.toml --verbose
       - cargo --offline build --release --manifest-path Cargo.toml
-      - install -Dm755 target/release/github_tools /app/bin/github_tools
+      - install -Dm755 target/release/github-tools /app/bin/github-tools
     sources:
       - type: dir
         path: .

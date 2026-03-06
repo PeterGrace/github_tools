@@ -81,8 +81,8 @@ jobs:
         shell: bash
         env:
           TARGET: ${{ matrix.job.target }}
-          PROJECT_NAME: github_tools
-          PACKAGE_NAME: github_tools
+          PROJECT_NAME: github-tools
+          PACKAGE_NAME: github-tools
           OS_NAME: ${{ matrix.job.os }}
         run: ./etc/ci/before_deploy.sh
 
@@ -90,7 +90,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            github_tools-*-${{ matrix.job.target }}.*
-            github_tools*.deb
+            github-tools-*-${{ matrix.job.target }}.*
+            github-tools*.deb
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

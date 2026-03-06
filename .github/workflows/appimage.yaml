@@ -25,12 +25,12 @@ jobs:
       - name: Assemble AppDir
         run: |
           mkdir -p AppDir/usr/bin
-          cp target/release/github_tools AppDir/usr/bin/github_tools
+          cp target/release/github-tools AppDir/usr/bin/github-tools
 
           cat > AppDir/github_tools.desktop << 'EOF'
           [Desktop Entry]
           Name=github_tools
-          Exec=github_tools
+          Exec=github-tools
           Icon=github_tools
           Type=Application
           Categories=Utility;Network;
@@ -42,7 +42,7 @@ jobs:
 
           cat > AppDir/AppRun << 'EOF'
           #!/bin/bash
-          exec "$APPDIR/usr/bin/github_tools" "$@"
+          exec "$APPDIR/usr/bin/github-tools" "$@"
           EOF
           chmod +x AppDir/AppRun
 
