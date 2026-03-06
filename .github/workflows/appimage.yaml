@@ -38,8 +38,6 @@ jobs:
           Comment=Terminal UI for RSS reading
           EOF
 
-          cp github_tools-screenshot.png AppDir/github_tools.png
-
           cat > AppDir/AppRun << 'EOF'
           #!/bin/bash
           exec "$APPDIR/usr/bin/github-tools" "$@"
