@@ -3,6 +3,7 @@ use anyhow::Result;
 
 mod commit_list;
 mod notify;
+mod pr_list;
 mod why_reviewer;
 
 #[derive(Parser, Debug)]
@@ -42,6 +43,25 @@ enum Commands {
         #[arg(short, long)]
         verbose: bool,
     },
+    /// Export pull requests in a date range to CSV
+    #[command(about = "List pull requests created in a date range and output as CSV")]
+    PrList {
+        /// Repository in the format "owner/repo"
+        #[arg(short, long)]
+        repo: String,
+
+        /// Include PRs created on or after this date (YYYY-MM-DD)
+        #[arg(long)]
+        after: String,
+
+        /// Include PRs created on or before this date (YYYY-MM-DD)
+        #[arg(long)]
+        before: String,
+
+        /// Write CSV output to this file (defaults to stdout)
+        #[arg(short, long)]
+        output: Option<String>,
+    },
     /// Export commits in a date range to CSV
     #[command(about = "List commits in a date range and output as CSV")]
     CommitList {
@@ -78,6 +98,9 @@ async fn main() -> Result<()> {
         }
         Commands::WhyReviewer { repo, pr, verbose } => {
             why_reviewer::run(token, repo, pr, verbose).await?;
+        }
+        Commands::PrList { repo, after, before, output } => {
+            pr_list::run(token, repo, after, before, output).await?;
         }
         Commands::CommitList { repo, after, before, output } => {
             commit_list::run(token, repo, after, before, output).await?;
