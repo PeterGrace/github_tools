@@ -50,13 +50,17 @@ enum Commands {
         #[arg(short, long)]
         repo: String,
 
-        /// Include PRs created on or after this date (YYYY-MM-DD)
+        /// Include PRs created on or after this date (YYYY-MM-DD); ignored when --query is set
         #[arg(long)]
-        after: String,
+        after: Option<String>,
 
-        /// Include PRs created on or before this date (YYYY-MM-DD)
+        /// Include PRs created on or before this date (YYYY-MM-DD); ignored when --query is set
         #[arg(long)]
-        before: String,
+        before: Option<String>,
+
+        /// Override the entire search query (ignores --after/--before; repo: qualifier is still injected unless already present)
+        #[arg(short, long)]
+        query: Option<String>,
 
         /// Write CSV output to this file (defaults to stdout)
         #[arg(short, long)]
@@ -99,8 +103,8 @@ async fn main() -> Result<()> {
         Commands::WhyReviewer { repo, pr, verbose } => {
             why_reviewer::run(token, repo, pr, verbose).await?;
         }
-        Commands::PrList { repo, after, before, output } => {
-            pr_list::run(token, repo, after, before, output).await?;
+        Commands::PrList { repo, after, before, query, output } => {
+            pr_list::run(token, repo, after, before, query, output).await?;
         }
         Commands::CommitList { repo, after, before, output } => {
             commit_list::run(token, repo, after, before, output).await?;
